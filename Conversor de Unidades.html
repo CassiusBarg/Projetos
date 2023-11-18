@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversor de Unidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 100px;
+            font-size: 16px;
+        }
+        button {
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor de Unidades</h1>
+    <label for="celsius">Celsius: </label>
+    <input type="number" id="celsius">
+    <button onclick="convertToCelsius()">Converter para Celsius</button>
+    <br>
+    <label for="fahrenheit">Fahrenheit: </label>
+    <input type="number" id="fahrenheit">
+    <button onclick="convertToFahrenheit()">Converter para Fahrenheit</button>
+
+    <script>
+        function convertToCelsius() {
+            const fahrenheitInput = document.getElementById('fahrenheit');
+            const celsiusInput = document.getElementById('celsius');
+
+            if (fahrenheitInput.value !== '') {
+                const fahrenheit = parseFloat(fahrenheitInput.value);
+                const celsius = (fahrenheit - 32) * (5 / 9);
+                celsiusInput.value = celsius.toFixed(2);
+            }
+        }
+
+        function convertToFahrenheit() {
+            const celsiusInput = document.getElementById('celsius');
+            const fahrenheitInput = document.getElementById('fahrenheit');
+
+            if (celsiusInput.value !== '') {
+                const celsius = parseFloat(celsiusInput.value);
+                const fahrenheit = (celsius * 9 / 5) + 32;
+                fahrenheitInput.value = fahrenheit.toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>

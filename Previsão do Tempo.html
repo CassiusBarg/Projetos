@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Previsão do Tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 200px;
+            font-size: 16px;
+        }
+        button {
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #weather-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Previsão do Tempo</h1>
+    <label for="city">Digite a cidade: </label>
+    <input type="text" id="city">
+    <button onclick="getWeather()">Obter Previsão</button>
+    <div id="weather-info"></div>
+
+    <script>
+        function getWeather() {
+            const cityInput = document.getElementById('city');
+            const weatherInfo = document.getElementById('weather-info');
+
+            if (cityInput.value.trim() === '') {
+                alert('Por favor, digite o nome da cidade.');
+                return;
+            }
+
+            const apiKey = 'f0d47de20d15f27e8006f8a8fb20f50c';
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&appid=${apiKey}&units=metric`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === '404') {
+                        weatherInfo.innerHTML = `<p>Cidade não encontrada.</p>`;
+                    } else {
+                        const city = data.name;
+                        const description = data.weather[0].description;
+                        const temperature = data.main.temp;
+                        const humidity = data.main.humidity;
+
+                        weatherInfo.innerHTML = `
+                            <p><strong>Cidade:</strong> ${city}</p>
+                            <p><strong>Descrição:</strong> ${description}</p>
+                            <p><strong>Temperatura:</strong> ${temperature} °C</p>
+                            <p><strong>Umidade:</strong> ${humidity}%</p>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a previsão do tempo:', error);
+                    weatherInfo.innerHTML = `<p>Erro ao buscar a previsão do tempo.</p>`;
+                });
+        }
+    </script>
+</body>
+</html>

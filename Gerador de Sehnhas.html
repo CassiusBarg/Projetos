@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerador de Senhas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 50px;
+            font-size: 16px;
+        }
+        button {
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #password {
+            font-size: 18px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Senhas</h1>
+    <label for="length">Comprimento: </label>
+    <input type="number" id="length" min="6" max="20" value="10">
+    <br>
+    <input type="checkbox" id="uppercase" checked>
+    <label for="uppercase">Letras Maiúsculas</label>
+    <input type="checkbox" id="lowercase" checked>
+    <label for="lowercase">Letras Minúsculas</label>
+    <input type="checkbox" id="numbers" checked>
+    <label for="numbers">Números</label>
+    <input type="checkbox" id="symbols">
+    <label for="symbols">Símbolos</label>
+    <br>
+    <button onclick="generatePassword()">Gerar Senha</button>
+    <div id="password"></div>
+
+    <script>
+        function generatePassword() {
+            const lengthInput = document.getElementById('length');
+            const uppercaseCheckbox = document.getElementById('uppercase');
+            const lowercaseCheckbox = document.getElementById('lowercase');
+            const numbersCheckbox = document.getElementById('numbers');
+            const symbolsCheckbox = document.getElementById('symbols');
+            const passwordDisplay = document.getElementById('password');
+
+            const length = parseInt(lengthInput.value);
+            const useUppercase = uppercaseCheckbox.checked;
+            const useLowercase = lowercaseCheckbox.checked;
+            const useNumbers = numbersCheckbox.checked;
+            const useSymbols = symbolsCheckbox.checked;
+
+            const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+            const numbersChars = '0123456789';
+            const symbolsChars = '!@#$%^&*()-_=+{}[]|;:,.<>?';
+
+            let availableChars = '';
+            if (useUppercase) {
+                availableChars += uppercaseChars;
+            }
+            if (useLowercase) {
+                availableChars += lowercaseChars;
+            }
+            if (useNumbers) {
+                availableChars += numbersChars;
+            }
+            if (useSymbols) {
+                availableChars += symbolsChars;
+            }
+
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * availableChars.length);
+                password += availableChars[randomIndex];
+            }
+
+            passwordDisplay.textContent = password;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #task-input {
+            width: 300px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        #task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .task-item.completed {
+            background-color: #d3ffd3;
+            text-decoration: line-through;
+        }
+        .delete-button {
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <input type="text" id="task-input" placeholder="Digite sua tarefa">
+    <button onclick="addTask()">Adicionar</button>
+    <ul id="task-list"></ul>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('task-input');
+            const taskList = document.getElementById('task-list');
+
+            if (taskInput.value.trim() === '') {
+                return;
+            }
+
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('task-item');
+            taskItem.innerHTML = `
+                <span>${taskInput.value}</span>
+                <span class="delete-button" onclick="removeTask(this)">X</span>
+            `;
+
+            taskList.appendChild(taskItem);
+            taskInput.value = '';
+        }
+
+        function removeTask(button) {
+            const taskList = document.getElementById('task-list');
+            const taskItem = button.parentElement;
+            taskList.removeChild(taskItem);
+        }
+
+        document.getElementById('task-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
